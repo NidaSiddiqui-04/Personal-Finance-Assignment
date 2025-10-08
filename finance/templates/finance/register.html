@@ -1,0 +1,40 @@
+{%extends 'finance/base.html'%}
+{%block content%}
+
+ <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+  <div class="card shadow p-4" style="width: 22rem; border-radius:12px;">
+    <h3 class="text-center mb-4">Sign Up</h3>
+    <form method="post">
+      {% csrf_token %}
+      {%for error in form.errors%}
+         <p style="background-color: crimson; font-size: large;font-weight: 700; text-align: center;">{{error}}</p>
+      {%endfor%}
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" name="password1" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" name="password2" class="form-control" required>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary" style="background-color: rgb(105, 50, 156);">Sign Up</button>
+      </div>
+    </form>
+
+     
+  </div>
+</div>
+{%endblock%}

@@ -1,0 +1,10 @@
+{%extends 'finance/base.html'%}
+
+{%block content%}
+<div style="text-align: center ; margin-top: 50px;">
+<h2>you have been logged out</h2>
+<form method="get" action="{%url 'finance:login'%}">
+    <button type="submit" style="background-color: rgb(109, 80, 136); color:white;font-weight: 600; font-size: large;">again login </button>
+</form>
+</div>
+{%endblock%}

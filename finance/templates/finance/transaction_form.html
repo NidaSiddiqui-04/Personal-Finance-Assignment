@@ -1,0 +1,38 @@
+{%extends 'finance/base.html'%}
+{%block content%}
+
+
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+  <div class="card shadow p-4" style="width: 25rem; border-radius:12px;">
+    <h3 class="text-center mb-4">Transaction form</h3>
+   <form method="post">
+    {%csrf_token%}
+    
+   <div class="mb-3">
+        <label class="form-label">Amount *</label>
+        <div><input type="number" name="amount" class="form-label" required></div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Transaction Type *</label>
+         <div >{{form.type}}</div required>
+  </div>
+  <div class="mb-3">
+        <label class="form-label">Category *</label>
+        <div>{{form.category}}</div required>
+      </div>
+
+        <div class="mb-3">
+        <label class="form-label">Date</label>
+        <div>{{form.date}}</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Notes</label>
+        <div><input type="text" name="notes" class="form-label" ></div>
+      </div>
+    <button type="submit" style="width: 350px;background-color: rgb(111, 74, 146); color: aliceblue; font-weight: 700;font-size: large;">Save</button>
+    
+</form>
+  </div>
+</div>
+{%endblock%}

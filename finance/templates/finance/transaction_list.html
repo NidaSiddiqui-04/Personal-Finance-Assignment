@@ -1,0 +1,47 @@
+{%extends 'finance/base.html'%}
+
+{%block content%}
+<form method="get" action="{%url 'finance:dashboard'%}">
+<button type="submit" style="font-size:large; background-color: rgb(131, 95, 165); color: aliceblue; margin-top: 20px; margin-left: 20px;">⬅ dashboard</button>
+</form>
+<div style="margin-top: 50px; margin-left: 200px; margin-right: 300px;">
+    <h3 style="text-align: center;">Transaction_list</h3>
+<table class="table table-success table-striped-columns">
+  <thead>
+    <tr>
+      <th scope="col">Amount</th>
+      <th scope="col">Transaction_type</th>
+      <th scope="col">Category</th>
+      <th scope="col">Date</th>
+      <th scope="rowgroup">✏️/❌</th>
+    </tr>
+  </thead>
+  {%for item in items%}
+  <tbody>
+    <tr>
+      <th scope="row">{{item.amount}}</th>
+      <td  >{{item.type}}</td>
+      <td>{{item.category}}</td>
+      <td>{{item.date}} </td>
+      <td><div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    ...
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="{%url 'finance:update' item.id%}">Edit</a></li>
+    <li><a class="dropdown-item" href="{%url 'finance:delete' item.id%}">delete</a></li>
+    
+  </ul>
+</div></td>
+
+      
+    </tr>
+</tbody>
+{%endfor%}
+
+</table>
+<form method="get" action="{%url 'finance:transaction_form'%}">
+<button style="width:100%; background-color: rgb(118, 83, 150);color: aliceblue;font-size: large;font-weight: 700;" type="submit">Add</button>
+</form>
+</div>
+{%endblock%}

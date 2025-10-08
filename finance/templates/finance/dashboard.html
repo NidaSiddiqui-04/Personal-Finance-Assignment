@@ -1,0 +1,123 @@
+{% extends 'finance/base.html'%}
+{%block content%}
+  
+<div>
+<h2>{{current_month_name}}{{current_year}}</h2>
+<div style=" margin-left: 1350px; margin-bottom: 10px;">
+  <a href="{% url 'finance:export_csv' %}" class="btn btn-primary">Download CSV</a>
+
+</div>
+</div>
+<div class="row text-center">
+  <div class="col-md-4">
+    <div class="card bg-success text-white mb-3">
+      <div class="card-body">
+        <h5>Total Income</h5>
+        <h3>₹{{ total_income }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card bg-danger text-white mb-3">
+      <div class="card-body">
+        <h5>Total Expenses</h5>
+        <h3>₹{{ total_expense }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card bg-info text-white mb-3">
+      <div class="card-body">
+        <h5>Current Balance</h5>
+        <h3>₹{{ balance }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container d-flex justify-content">
+  <h4 style="margin-left:  100px ;">Expenses by Category</h4>
+  <h4 style="margin-left: 600px;">Monthly spending Trends</h4>
+</div>
+<div  class="container d-flex justify-content-center align-items-center " style="margin-top: 20px;">
+<div style="width: 400px; height: 400px;margin-right: 100px;">
+<canvas id="expensepiechart" ></canvas>
+</div>
+<div style="width: 400px;height: 400px; margin-left: 300px;">
+<canvas id="monthlyBarChart"></canvas>
+</div>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('expensepiechart').getContext('2d');
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: {{categories|safe}},
+      datasets: [{
+        data:{{amount|safe}} ,
+        backgroundColor: ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF']
+      }]
+    }
+  });
+
+
+
+ 
+
+  const ctx2 = document.getElementById('monthlyBarChart').getContext('2d');
+  new Chart(ctx2, {
+    type: 'bar', // you can use 'line' if you prefer a line chart
+    data: {
+      labels: {{ months|safe }},
+      datasets: [{
+        label: 'Monthly Expenses',
+        data: {{ monthly_totals|safe }},
+        backgroundColor: '#36A2EB',
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+</script>
+</div>
+
+<div >
+<h4>Recent Transactions</h4>
+<table class="table table-striped" >
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Category</th>
+      <th>Amount</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% for transaction in recent_transaction %}
+    <tr>
+      <td>{{ transaction.date }}</td>
+      <td>{{ transaction.type }}</td>
+      <td>{{ transaction.category }}</td>
+      <td>₹{{ transaction.amount }}</td>
+      
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No recent transactions.</td></tr>
+    {% endfor %}
+  </tbody>
+
+
+</table>
+<a href="{% url 'finance:transaction_list' %}" class="btn btn-primary">View All Transactions</a>
+
+</div>
+
+
+{%endblock%}
